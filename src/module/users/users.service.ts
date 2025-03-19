@@ -5,14 +5,13 @@ import { PaginationDto } from 'src/common/pagination_dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
 import { Model } from 'mongoose';
-import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class UsersService {
 
   constructor(@InjectModel(User.name) private UserModel: Model<User>){}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<Object> {
 
     const user_existence = await this.UserModel.findOne({name: createUserDto.name})
 
@@ -24,7 +23,7 @@ export class UsersService {
 
     return {
       status: HttpStatus.CREATED,
-      data: userCreated.save(),
+      data: await userCreated.save(),
       message: `The user ${createUserDto.name} was created sucesfully `
     }
 
@@ -33,7 +32,7 @@ export class UsersService {
 
   async findAll(
     paginationDto: PaginationDto
-  ) {
+  ): Promise<Object> {
 
     const {skip, limit} = paginationDto
 
@@ -50,7 +49,7 @@ export class UsersService {
     }
   }
 
-  async findOneById(id: number) {
+  async findOneById(id: string): Promise<Object> {
   
     const user_by_id = await this.UserModel.findById(id)
 
@@ -62,7 +61,7 @@ export class UsersService {
 
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<Object> {
 
     const user_for_update = await this.UserModel.findById(id)
 
@@ -81,7 +80,7 @@ export class UsersService {
     
   }
 
-  async remove(id: number) {
+  async remove(id: string): Promise<Object> {
     
     const user_deleted = await this.UserModel.findByIdAndDelete(id)
 

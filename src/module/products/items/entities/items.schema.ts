@@ -1,33 +1,28 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
 
-@Schema()
-export class Items {
+@Schema({timestamps: true})
+export class Items extends Document {
 
-    @Prop()
-    id: number; 
-
-    @Prop()
+    @Prop({required: true})
     sku: string;
 
-    @Prop()
+    @Prop({required: true})
     name: string;   
 
-    @Prop() 
+    @Prop({default: false}) 
     variableProduct: boolean;
 
     @Prop()
-    parentCode: string;
+    parentCode?: string;
 
-    @Prop()
+    @Prop({default: 1})
     quantity: number;
 
     @Prop()
     price: number;
 
-    @Prop()
     createdAt: Date;
-
-    @Prop()
     updatedAt: Date;
 
 }

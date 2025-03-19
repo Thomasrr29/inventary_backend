@@ -3,7 +3,9 @@ import { WarrantyStatus } from "src/common/warranty_status.enum"
 
 export class CreateWarrantyDto {
 
-    @ApiProperty()
+    @ApiProperty({
+        minimum: 1
+    })
     productId: number; 
     
     @ApiProperty()

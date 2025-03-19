@@ -17,7 +17,7 @@ export class ItemsService {
     @InjectModel(Items.name) private ItemsModel: Model<Items>
   ){}
 
-  async create(createItemsDto: CreateItemsDto) {
+  async create(createItemsDto: CreateItemsDto): Promise<Object> {
     
     const createdItem = new this.ItemsModel(createItemsDto); 
 
@@ -29,7 +29,7 @@ export class ItemsService {
 
   }
 
-  async findAll(skip: number, limit: number) {
+  async findAll(skip: number, limit: number): Promise<Object> {
 
     const items = await this.ItemsModel
     .find()
@@ -48,7 +48,7 @@ export class ItemsService {
     }
   }
 
-  async findOne(id: number) {
+  async findOne(id: string): Promise<Object> {
 
     const item_by_id = await this.ItemsModel.findById(id).exec()
 
@@ -63,7 +63,7 @@ export class ItemsService {
     }
   }
 
-  async update(id: number, updateItemsDto: UpdateItemsDto) {
+  async update(id: string, updateItemsDto: UpdateItemsDto): Promise<Object> {
     
     const item_for_update = await this.ItemsModel.findById(id)
 
@@ -81,7 +81,7 @@ export class ItemsService {
 
   }
 
-  async remove(id: number) {
+  async remove(id: string): Promise<Object> {
 
    const item_delete = await this.ItemsModel.findByIdAndDelete(id)
 

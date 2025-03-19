@@ -3,11 +3,11 @@ import { ItemsService } from './items.service';
 import { CreateItemsDto } from './dto/create-product.dto';
 import { UpdateItemsDto } from './dto/update-product.dto';
 
-@Controller('Items')
+@Controller('items')
 export class ItemsController {
   constructor(private readonly productsService: ItemsService) {}
 
-  @Post()
+  @Post("/create")
   create(@Body() createProductDto: CreateItemsDto) {
     return this.productsService.create(createProductDto);
   }
@@ -20,18 +20,18 @@ export class ItemsController {
     return this.productsService.findAll(skip, limit);
   }
 
-  @Get(':id')
+  @Get('/:id')
   findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+    return this.productsService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch('/:id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateItemsDto) {
-    return this.productsService.update(+id, updateProductDto);
+    return this.productsService.update(id, updateProductDto);
   }
 
-  @Delete(':id')
+  @Delete('/:id')
   remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
+    return this.productsService.remove(id);
   }
 }

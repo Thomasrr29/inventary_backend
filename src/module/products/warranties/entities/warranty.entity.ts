@@ -1,21 +1,18 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
 import { WarrantyStatus } from "src/common/warranty_status.enum";
 
 
-@Schema()
-export class Warranty {
+@Schema({timestamps: true})
+export class Warranty extends Document {
 
     @Prop()
-    id: number
-
-    @Prop()
-    productId: number; 
-
-    @Prop()
-    createdAt: Date; 
+    productSku: string; 
 
     @Prop()
     status: WarrantyStatus
+
+    createdAt: Date; 
 
 }
 

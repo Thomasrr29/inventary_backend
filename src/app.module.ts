@@ -2,9 +2,8 @@ import { Module } from '@nestjs/common';
 import { ProductModule } from './module/products/products.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UsersModule } from './module/users/users.module';
 
-
-console.log(process.env.DB_MONGO_URL)
 @Module({
   
   imports: [
@@ -17,7 +16,7 @@ console.log(process.env.DB_MONGO_URL)
       inject: [ConfigService]
     }),
     
-    ProductModule],
+    ProductModule, UsersModule],
   
 })
 

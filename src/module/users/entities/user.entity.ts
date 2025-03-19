@@ -1,7 +1,9 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
+import { AccountType } from "src/common/account_type_enum";
 
-@Schema()
-export class User {
+@Schema({timestamps: true})
+export class User extends Document {
 
     @Prop({
         minlength: 4,
@@ -23,8 +25,8 @@ export class User {
     })
     accountType: AccountType
 
-    @Prop()
     createdAt: Date
+    updateAt: Date
 
 }
 

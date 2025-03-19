@@ -11,7 +11,7 @@ export class WarrantiesService {
   
   constructor(@InjectModel(Warranty.name) private WarrantyModel: Model<Warranty>) {}
   
-  async create(createWarrantyDto: CreateWarrantyDto) {
+  async create(createWarrantyDto: CreateWarrantyDto): Promise<Object>{
 
     const createdWarranty = new this.WarrantyModel(createWarrantyDto); 
 
@@ -23,7 +23,7 @@ export class WarrantiesService {
     
   }
 
-  async findAll(paginationDto: PaginationDto){
+  async findAll(paginationDto: PaginationDto): Promise<Object>{
 
     const {skip, limit} = paginationDto
 
@@ -45,7 +45,7 @@ export class WarrantiesService {
     
   }
 
-  async findOne(id: number) {
+  async findOneById(id: string): Promise<Object> {
 
     const warranty_by_id = await this.WarrantyModel.findById(id).exec()
 
@@ -61,7 +61,7 @@ export class WarrantiesService {
     
   }
 
-  async update(id: number, updateWarrantyDto: UpdateWarrantyDto) {
+  async update(id: string, updateWarrantyDto: UpdateWarrantyDto): Promise<Object> {
 
     const warranty_for_update = await this.WarrantyModel.findById(id)
 
@@ -80,7 +80,7 @@ export class WarrantiesService {
     
   }
 
-  async remove(id: number) {
+  async remove(id: string): Promise<Object> {
     
     const warranty_for_delete = await this.WarrantyModel.findByIdAndDelete(id)
 

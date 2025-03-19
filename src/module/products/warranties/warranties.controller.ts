@@ -21,18 +21,18 @@ export class WarrantiesController {
     return this.warrantiesService.findAll(paginationDto);
   }
 
-  @Get(':id')
+  @Get('/:id')
   findOne(@Param('id') id: string) {
-    return this.warrantiesService.findOne(+id);
+    return this.warrantiesService.findOneById(id);
   }
 
-  @Patch(':id')
+  @Patch('/:id')
   update(@Param('id') id: string, @Body() updateWarrantyDto: UpdateWarrantyDto) {
-    return this.warrantiesService.update(+id, updateWarrantyDto);
+    return this.warrantiesService.update(id, updateWarrantyDto);
   }
 
-  @Delete(':id')
+  @Delete('/:id')
   remove(@Param('id') id: string) {
-    return this.warrantiesService.remove(+id);
+    return this.warrantiesService.remove(id);
   }
 }
