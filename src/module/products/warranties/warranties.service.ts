@@ -1,10 +1,11 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateWarrantyDto } from './dto/create-warranty.dto';
 import { UpdateWarrantyDto } from './dto/update-warranty.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Warranty } from './entities/warranty.entity';
 import { Model } from 'mongoose';
 import { PaginationDto } from 'src/common/pagination_dto';
+import { ResponseServiceDto } from 'src/common/response_services.dto';
 
 @Injectable()
 export class WarrantiesService {
@@ -23,12 +24,13 @@ export class WarrantiesService {
     
   }
 
-  async findAll(paginationDto: PaginationDto): Promise<Object>{
+  async findAll(paginationDto: PaginationDto): Promise<any>{
 
     const {skip, limit} = paginationDto
 
     const warranties = await this.WarrantyModel
     .find()
+    .populate("productId")
     .skip(skip)
     .limit(limit)
     .lean()
@@ -45,12 +47,15 @@ export class WarrantiesService {
     
   }
 
-  async findOneById(id: string): Promise<Object> {
+  async findOneById(id: string): Promise<ResponseServiceDto> {
 
-    const warranty_by_id = await this.WarrantyModel.findById(id).exec()
+    const warranty_by_id = await this.WarrantyModel
+    .findById(id)
+    .populate("productId")
+    .exec()
 
     if (!warranty_by_id){
-      throw new Error("Warranty with the id: ${id} wasnt found")
+      throw new NotFoundException("Warranty with the id: ${id} wasnt found")
     }
 
     return {
@@ -61,7 +66,7 @@ export class WarrantiesService {
     
   }
 
-  async update(id: string, updateWarrantyDto: UpdateWarrantyDto): Promise<Object> {
+  async update(id: string, updateWarrantyDto: UpdateWarrantyDto): Promise<ResponseServiceDto> {
 
     const warranty_for_update = await this.WarrantyModel.findById(id)
 
@@ -73,26 +78,28 @@ export class WarrantiesService {
 
     return {
       status: HttpStatus.OK,
-      data: warranty_for_update,
+      data: await warranty_for_update.save(),
       message: "The warranty was updated sucessfully ✅"
     }
 
     
   }
 
-  async remove(id: string): Promise<Object> {
+  async remove(id: string): Promise<any> {
     
     const warranty_for_delete = await this.WarrantyModel.findByIdAndDelete(id)
 
     if (!warranty_for_delete){
-      throw new Error(`The warranty for delete wasn't found with the id: ${id}`)
+      throw new NotFoundException(`The warranty for delete wasn't found with the id: ${id}`)
     }
 
     return {
       status: HttpStatus.OK,
+      data: warranty_for_delete,
       message: `The warranty was removed sucessfully ✅`
     }
 
 
   }
+  
 }

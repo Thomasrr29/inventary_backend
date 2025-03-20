@@ -5,7 +5,7 @@ import { AccountType } from "src/common/account_type_enum"
 export class CreateUserDto {
 
     @ApiProperty()
-    name: string
+    username: string
     
     @ApiProperty()
     @IsEmail()

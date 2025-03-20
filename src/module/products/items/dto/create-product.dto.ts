@@ -20,7 +20,7 @@ export class CreateItemsDto {
     @ApiProperty({
         description:"The product is a variation"
     })
-    parentCode: string;
+    parentId: string;
 
     @ApiProperty()
     quantity: number;

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 
 @Schema({timestamps: true})
 export class Items extends Document {
@@ -13,8 +13,8 @@ export class Items extends Document {
     @Prop({default: false}) 
     variableProduct: boolean;
 
-    @Prop()
-    parentCode?: string;
+    @Prop({type: Types.ObjectId, ref: "Items", default: null})
+    parentId?: Types.ObjectId;
 
     @Prop({default: 1})
     quantity: number;

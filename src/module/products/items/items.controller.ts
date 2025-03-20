@@ -22,7 +22,12 @@ export class ItemsController {
 
   @Get('/:id')
   findOne(@Param('id') id: string) {
-    return this.productsService.findOne(id);
+    return this.productsService.findOneById(id);
+  }
+
+  @Get('/sku/:sku')
+  findOneBySku(@Param('sku') sku: string){
+    return this.productsService.findBySku(sku)
   }
 
   @Patch('/:id')
